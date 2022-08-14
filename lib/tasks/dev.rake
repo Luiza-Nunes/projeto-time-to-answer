@@ -6,7 +6,7 @@ namespace :dev do
   task setup: :environment do
 
     if Rails.env.development?
-      puts %x(rails db:drop db:create db:migrate dev:add_default_admin dev:add_default_user)
+      puts %x(rails db:drop db:create db:migrate dev:add_default_admin dev:add_extra_admins dev:add_default_user)
     else
       puts "Você não está em ambiente de desenvolvimento!"
     end
@@ -19,6 +19,17 @@ namespace :dev do
       password: DEFAULT_PASSWORD,
       password_confirmation: DEFAULT_PASSWORD
     )
+  end
+
+  desc "Adiciona administradores extras"
+  task add_extra_admins: :environment do
+    10.times do |i|
+      Admin.create!(
+        email: Faker::Internet.email,
+        password: DEFAULT_PASSWORD,
+        password_confirmation: DEFAULT_PASSWORD
+      )
+    end
   end
 
   desc "Adiciona o usuário padrão"
