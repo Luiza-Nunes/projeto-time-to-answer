@@ -96,6 +96,17 @@
 
       <%= javascript_include_tag 'application' %>
       <%= javascript_include_tag 'admins_backoffice' %>
-  </body>
 
+      <% if notice %>
+        <script>
+          $.bootstrapGrowl("<%= notice %>", {
+            type: "success",
+            align: "right",
+            allow_dismiss: true,
+            stackup_spacing: 10
+          });
+        </script>
+      <% end %>
+
+  </body>
 </html>
