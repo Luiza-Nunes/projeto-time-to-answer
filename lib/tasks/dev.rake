@@ -7,7 +7,7 @@ namespace :dev do
   task setup: :environment do
 
     if Rails.env.development?
-      puts %x(rails db:drop db:create db:migrate dev:add_default_admin dev:add_extra_admins dev:add_default_user dev:add_subjects)
+      puts %x(rails db:drop db:create db:migrate dev:add_default_admin dev:add_extra_admins dev:add_default_user dev:add_subjects dev:add_questions_and_answers)
     else
       puts "Você não está em ambiente de desenvolvimento!"
     end
@@ -49,6 +49,18 @@ namespace :dev do
 
     File.open(file_path, 'r').each do |line|
       Subject.create!(description: line.strip)
+    end
+  end
+
+  desc "Adiciona perguntas e respostas" 
+  task add_questions_and_answers: :environment do
+    Subject.all.each do |subject|
+      rand(5..10).times do |i|
+        Question.create!(
+          description: "#{Faker::Lorem.paragraphs} #{Faker::Lorem.question}",
+          subject: subject
+        )
+      end
     end
   end
 end
