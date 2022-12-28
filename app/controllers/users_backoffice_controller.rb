@@ -1,5 +1,6 @@
 class UsersBackofficeController < ApplicationController
   before_action :authenticate_user!
+  before_action :build_profile
   layout 'users_backoffice'
 
   private 
